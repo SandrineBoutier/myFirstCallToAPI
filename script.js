@@ -29,6 +29,17 @@ function CreateTableRow (product) {
     return render;
 } 
 
+function CreateTableHeadRow (product){
+    var render = "<tr>"
+    var properties = Object.getOwnPropertyNames(product);
+    var ths = properties.map(function(property){
+        return "<th>"+product[property]+"</th>";
+    });
+    render += tds.join("");
+    render += "</tr>"
+    return render;
+}
+
 function GenerateRow(product) {    
     return CreateTableRow(product);          
 }
@@ -38,8 +49,14 @@ function CreateTableRows(products){
     return rows;
 }
 
+function CreateTableColumns(product){
+    var columns = product.map(GenerateColumn);
+    return columns;
+}
+
 function ShowProducts(products) {   
     var productsTable = document.getElementById("productsTable");
+    var columns = CreateTableColumns(product);
     var rows = CreateTableRows(products);
     productsTable.innerHTML = rows.join("");
     document.getElementById("spinner").style.display = "none";
